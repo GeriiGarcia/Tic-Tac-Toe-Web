@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Tic-tac-toe</title>
+
+    <style>
+
+        *{
+            padding: 0;
+            margin: 0;
+        }
+
+        body{
+            display: flex;
+            text-align: center;
+        }
+
+        #juego{
+            margin: 10rem auto;
+        }
+
+        .pieza{
+            width: 8rem;
+            height: 8rem;
+            background-color: aqua;
+        }
+
+    </style>
+
+    <script>
+    /*-puedo hacer que cada vez que le doy a una clase pieza se ponga una x o un o en funcion de el turno
+    -Puedo cambiar/añadir la clase para que el texto se vea de un color o de otro dependiendo de si has puesto una X o O
+    -*/
+
+    let tornX = "X";
+    let fi = false
+    let matriuJoc = [["","",""],["","",""],["","",""]];
+
+
+    function canviTorn()
+    {
+        if(tornX == "X")  
+            tornX = "O" ;
+        else 
+            tornX = "X";
+    }
+
+    function linea()
+    {
+        let linea = false;
+        let auxFila = [];
+        for(let i = 0; i< matriuJoc.length; i++)
+        {
+            let auxCol = matriuJoc[i];
+            let aux = [];
+            for(let k = 0; k < matriuJoc.length; k++)
+            {
+                const elemento = matriuJoc[i][k];
+                if(!aux.includes(matriuJoc[i][k]))
+                {
+                    aux.push(elemento); 
+                }
+            }
+            console.log(aux);
+            if(aux.length == 1 && aux[0] != "")
+            {
+                fi = true;
+                return true;
+            }
+
+        }
+
+        
+
+        return linea;
+    }
+
+    document.addEventListener('click', function(ev) {
+
+        if(ev.target.className == "pieza" && !fi)
+        {
+           let cordFil = parseInt(ev.target.id[0]);
+           let cordCol = parseInt(ev.target.id[1]);
+           
+
+            /escric X o O depenent del torn/
+            if(tornX == "X")
+            {
+                ev.target.innerHTML = "X";
+                matriuJoc[cordFil][cordCol] = tornX;
+            }
+            else
+            {
+                ev.target.innerHTML = "O";
+                matriuJoc[cordFil][cordCol] = tornX;
+            }
+
+            if(!linea())
+                canviTorn();
+            else
+            {
+                document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
+            }
+        }
+
+
+    },false);
+    </script>
+</head>
+<body>
+
+    <table id="juego">
+
+        <p id="guanyador">hola</p>
+
+        <tr>
+            <td class="pieza" id="00"></td>
+            <td class="pieza" id="01"></td>
+            <td class="pieza" id="02"></td>
+        </tr>
+
+        <tr>
+            <td class="pieza" id="10"></td>
+            <td class="pieza" id="11"></td>
+            <td class="pieza" id="12"></td>
+        </tr>
+
+        <tr>
+            <td class="pieza" id="20"></td>
+            <td class="pieza" id="21"></td>
+            <td class="pieza" id="22"></td>
+        </tr>
+
+
+    </table>
+    
+</body>
+</html>
