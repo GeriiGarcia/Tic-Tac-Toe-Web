@@ -14,19 +14,46 @@
         }
 
         body{
-            display: flex;
+            background-color: #462485;
             text-align: center;
         }
 
+        #titol{
+            height: min-content;
+            margin: 9rem auto 3rem auto;
+            align-content: center;
+        }
+
         #juego{
-            margin: 10rem auto;
+            margin:  auto;
+            
         }
 
         .pieza{
             width: 8rem;
             height: 8rem;
-            background-color: aqua;
+            background-color: white;
+            border-radius: 2rem;
         }
+
+        p{
+            margin:auto;
+        }
+
+        .pieza:hover{
+            text-align: center;
+            position: absolute;
+            margin: -1rem -1rem -1rem -1rem;
+            width: 10rem;
+            height: 9rem;
+            background-color: white;
+            border-radius: 2rem;
+            color: white;
+        }
+
+        table {
+  background: #462485;
+}
 
     </style>
 
@@ -46,6 +73,8 @@
             tornX = "O" ;
         else 
             tornX = "X";
+
+        document.getElementById("guanyador").innerText = "Torn de les: " + tornX; 
     }
 
     function linea()
@@ -73,6 +102,34 @@
 
         }
 
+
+        for(let i = 0; i< matriuJoc.length; i++)
+        {
+            let auxCol = matriuJoc[i];
+            let aux = [];
+            for(let k = 0; k < matriuJoc.length; k++)
+            {
+                const elemento = matriuJoc[k][i];
+                if(!aux.includes(matriuJoc[k][i]))
+                {
+                    aux.push(elemento); 
+                }
+            }
+            console.log(aux);
+            if(aux.length == 1 && aux[0] != "")
+            {
+                fi = true;
+                return true;
+            }
+        }
+
+        if((matriuJoc[0][0] && matriuJoc[1][1] && matriuJoc[2][2]) || (matriuJoc[0][2] && matriuJoc[1][1] && matriuJoc[2][0]))
+        {
+            fi = true;
+            return true; 
+        }
+            
+
         
 
         return linea;
@@ -86,7 +143,7 @@
            let cordCol = parseInt(ev.target.id[1]);
            
 
-            /escric X o O depenent del torn/
+            /*escric X o O depenent del torn*/
             if(tornX == "X")
             {
                 ev.target.innerHTML = "X";
@@ -103,6 +160,7 @@
             else
             {
                 document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
+                /*enseñar el botto*/
             }
         }
 
@@ -114,7 +172,10 @@
 
     <table id="juego">
 
-        <p id="guanyador">hola</p>
+        <div id="titol">
+            <p id="guanyador">Torn de les: X</p>
+        </div>
+        
 
         <tr>
             <td class="pieza" id="00"></td>
