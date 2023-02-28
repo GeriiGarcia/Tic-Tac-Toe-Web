@@ -37,19 +37,12 @@
         }
 
         p{
-            margin:auto;
+            margin: 2rem auto;
+            color: white;
+            
         }
 
-        .pieza:hover{
-            text-align: center;
-            position: absolute;
-            margin: -1rem -1rem -1rem -1rem;
-            width: 10rem;
-            height: 9rem;
-            background-color: white;
-            border-radius: 2rem;
-            color: white;
-        }
+    
 
         table {
   background: #462485;
@@ -144,24 +137,27 @@
            
 
             /*escric X o O depenent del torn*/
-            if(tornX == "X")
+            if(matriuJoc[cordFil][cordCol] == "")
+            {
+                if(tornX == "X")
             {
                 ev.target.innerHTML = "X";
                 matriuJoc[cordFil][cordCol] = tornX;
             }
-            else
-            {
-                ev.target.innerHTML = "O";
-                matriuJoc[cordFil][cordCol] = tornX;
+                else
+                {
+                    ev.target.innerHTML = "O";
+                    matriuJoc[cordFil][cordCol] = tornX;
+                }
+                if(!linea())
+                    canviTorn();
+                else
+                {
+                    document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
+                    /*enseñar el botto*/
+                }
             }
-
-            if(!linea())
-                canviTorn();
-            else
-            {
-                document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
-                /*enseñar el botto*/
-            }
+   
         }
 
 
