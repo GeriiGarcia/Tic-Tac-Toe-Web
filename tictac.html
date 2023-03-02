@@ -89,12 +89,15 @@
     let tornX = "X";
     let fi = false
     let matriuJoc = [["","",""],["","",""],["","",""]];
+    let fitxes = 0;
+    const complet = 9;
 
 
     function iniciar()
     {
         matriuJoc = [["","",""],["","",""],["","",""]];
         fi = false;
+        fitxes = 0;
         tornX = "X";
 
         for(let i = 0; i < matriuJoc.length; i++)
@@ -111,12 +114,23 @@
 
     function canviTorn()
     {
-        if(tornX == "X")  
-            tornX = "O" ;
-        else 
-            tornX = "X";
+        if(fitxes < complet - 1)
+        {
+            if(tornX == "X")  
+                tornX = "O" ;
+            else 
+                tornX = "X";
 
-        document.getElementById("guanyador").innerText = "Torn de les: " + tornX; 
+            document.getElementById("guanyador").innerText = "Torn de les: " + tornX; 
+            fitxes++;
+        }
+        else 
+        {
+            document.getElementById("guanyador").innerText = "Empat"; 
+            document.getElementById("volver").style.display = "inherit";
+        }
+        
+
     }
 
     function linea()
@@ -163,13 +177,11 @@
             }
         }
 
-        if((matriuJoc[0][0] && matriuJoc[1][1] && matriuJoc[2][2]) || (matriuJoc[0][2] && matriuJoc[1][1] && matriuJoc[2][0]))
+        if((matriuJoc[0][0] == matriuJoc[2][2] && matriuJoc[1][1] == matriuJoc[0][0] && matriuJoc[2][2]) || (matriuJoc[0][2] == matriuJoc[2][0] && matriuJoc[1][1] == matriuJoc[0][2] && matriuJoc[2][0]))
         {
             fi = true;
             return true; 
         }
-            
-
         
 
         return linea;
