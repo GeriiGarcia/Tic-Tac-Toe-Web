@@ -42,12 +42,39 @@
             border-radius: 2rem;
             font-size: 5rem;
             font-family: 'Ubuntu-Title';
+            cursor: default;
         }
 
         p{
             margin: 2rem auto;
             color: white;
             font-size: 1.5rem;
+        }
+
+        @keyframes ponerFicha{
+            0% {font-size: 7rem;}
+            100% {font-size: 5rem;}
+        }
+
+        .animacionPoner{
+            animation: ponerFicha 1s forwards; 
+            width: 8rem;
+            height: 8rem;
+            background-color: white;
+            border-radius: 2rem;
+            font-size: 5rem;
+            font-family: 'Ubuntu-Title';
+            cursor: default;
+        }
+
+        @keyframes aumentar{
+            0% {font-size: 5rem;}
+            50% {font-size: 7rem;}
+            100% {font-size: 5rem;}
+        }
+
+        .pieza:hover{
+            animation: aumentar 1s infinite;
         }
 
         table {
@@ -193,6 +220,13 @@
         {
            let cordFil = parseInt(ev.target.id[0]);
            let cordCol = parseInt(ev.target.id[1]);
+
+           /*animar*/
+           ev.target.classList.remove("pieza" );
+           ev.target.classList.add("animacionPoner");
+           setTimeout(function(){ ev.target.classList.remove("animacionPoner" );   
+           ev.target.classList.add("pieza");                      
+            }, 1000);
            
 
             /*escric X o O depenent del torn*/
