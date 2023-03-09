@@ -127,6 +127,10 @@
     let fitxes = 0;
     const complet = 9;
 
+    window.onload = function arraglao(){
+        document.getElementById("lineaGanadora").style.display = "none";
+    }
+
 
     function iniciar()
     {
@@ -134,6 +138,8 @@
         fi = false;
         fitxes = 0;
         tornX = "X";
+
+        document.getElementById("lineaGanadora").style.display = "none";
 
         for(let i = 0; i < matriuJoc.length; i++)
         {
@@ -171,7 +177,7 @@
     function linea()
     {
 
-        /*Columnes*/
+        /*Horizontales*/
         let linea = -1;
         let auxFila = [];
         for(let i = 0; i< matriuJoc.length; i++)
@@ -189,12 +195,12 @@
             if(aux.length == 1 && aux[0] != "")
             {
                 fi = true;
-                return i+1+10; /*retorn i+1 ja que i va del 0 al 2*/
+                return i+10; /*retorn i+1 ja que i va del 0 al 2*/
             }
 
         }
 
-        /*Filas*/ 
+        /*Verticales*/ 
         for(let i = 0; i< matriuJoc.length; i++)
         {
             let auxCol = matriuJoc[i];
@@ -210,7 +216,7 @@
             if(aux.length == 1 && aux[0] != "")
             {
                 fi = true;
-                return true;
+                return i+20;
             }
         }
 
@@ -258,10 +264,56 @@
                     ev.target.innerHTML = "O";
                     matriuJoc[cordFil][cordCol] = tornX;
                 }
-                if(!linea())
+                if(linea() == -1)
                     canviTorn();
                 else
                 {
+                    console.log(linea());
+                    let ralla = document.getElementById("lineaGanadora");
+                    ralla.style.display = "inherit";
+                    switch (linea()) {
+                        case 1: /*N-O*/
+                            ralla.style.rotate = "-45deg";
+                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            break;
+
+                        case 2: /*N-E*/
+                            ralla.style.rotate = "45deg";
+                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            break;
+                    
+                        case 10: /*Horizontal 0*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "-8rem 5rem auto 59.5rem"
+                            break;
+
+                        case 11: /*Horizontal 1*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            break;
+
+                        case 12: /*Horizontal 2*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "8rem 5rem auto 59.5rem"
+                            break;
+
+                        case 20: /*Vertical 0*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto 51.5rem"
+                            break;
+                        
+                        case 21: /*Vertical 1*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            break;
+
+                        case 22: /*Vertical 2*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto 67.5rem"
+                            break;
+                        default:
+                            break;
+                    }
                     document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
                     /*enseñar el botto*/
                     document.getElementById("volver").style.display = "inherit";
