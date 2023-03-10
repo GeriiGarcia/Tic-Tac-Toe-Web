@@ -48,6 +48,7 @@
             margin: 2rem auto;
             color: white;
             font-size: 1.5rem;
+            z-index: 2;
         }
 
         @keyframes ponerFicha{
@@ -110,8 +111,10 @@
             width: 1rem;
             height: 24.5rem;
             background-color: red;
+            opacity: 20%;
             border-radius: 10%;
             rotate: 45deg;
+            z-index: 1;
         }
 
     </style>
@@ -126,9 +129,11 @@
     let matriuJoc = [["","",""],["","",""],["","",""]];
     let fitxes = 0;
     const complet = 9;
+    let pantalla;
 
     window.onload = function arraglao(){
         document.getElementById("lineaGanadora").style.display = "none";
+        pantalla = window.innerWidth;
     }
 
 
@@ -145,7 +150,6 @@
         {
             for(let j = 0; j < matriuJoc.length; j++)
             {
-                console.log();
                 document.getElementById(i.toString() + j.toString()).innerText = "";
             }
         }
@@ -268,48 +272,49 @@
                     canviTorn();
                 else
                 {
-                    console.log(linea());
+                    
                     let ralla = document.getElementById("lineaGanadora");
                     ralla.style.display = "inherit";
                     switch (linea()) {
                         case 1: /*N-O*/
                             ralla.style.rotate = "-45deg";
-                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5).toString() + "rem";
+                           
                             break;
 
                         case 2: /*N-E*/
                             ralla.style.rotate = "45deg";
-                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
                             break;
                     
                         case 10: /*Horizontal 0*/
                             ralla.style.rotate = "90deg";
-                            ralla.style.margin = "-8rem 5rem auto 59.5rem"
+                            ralla.style.margin = "-8rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";;
                             break;
 
                         case 11: /*Horizontal 1*/
                             ralla.style.rotate = "90deg";
-                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            ralla.style.margin = "0rem 5rem auto "+ ((pantalla/32)-0.5 ).toString() + "rem";
                             break;
 
                         case 12: /*Horizontal 2*/
                             ralla.style.rotate = "90deg";
-                            ralla.style.margin = "8rem 5rem auto 59.5rem"
+                            ralla.style.margin = "8rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
                             break;
 
                         case 20: /*Vertical 0*/
                             ralla.style.rotate = "0deg";
-                            ralla.style.margin = "0rem 5rem auto 51.5rem"
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 -8).toString() + "rem";
                             break;
                         
                         case 21: /*Vertical 1*/
                             ralla.style.rotate = "0deg";
-                            ralla.style.margin = "0rem 5rem auto 59.5rem"
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
                             break;
 
                         case 22: /*Vertical 2*/
                             ralla.style.rotate = "0deg";
-                            ralla.style.margin = "0rem 5rem auto 67.5rem"
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 +8).toString() + "rem";
                             break;
                         default:
                             break;
