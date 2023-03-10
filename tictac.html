@@ -7,7 +7,7 @@
     <title>Tic-tac-toe</title>
 
     <style>
-
+ 
         @font-face {
             font-family: Ubuntu-Title;
             src: url("Ubuntu-Title.ttf");
@@ -32,7 +32,6 @@
 
         #juego{
             margin:  auto;
-            
         }
 
         .pieza{
@@ -49,6 +48,7 @@
             margin: 2rem auto;
             color: white;
             font-size: 1.5rem;
+            z-index: 2;
         }
 
         @keyframes ponerFicha{
@@ -105,6 +105,17 @@
             font-size: 20px;
         }
 
+        #lineaGanadora{
+            position: absolute;
+            margin: 0rem 5rem auto 59.5rem;
+            width: 1rem;
+            height: 24.5rem;
+            background-color: red;
+            opacity: 20%;
+            border-radius: 10%;
+            rotate: 45deg;
+            z-index: 1;
+        }
 
     </style>
 
@@ -118,6 +129,12 @@
     let matriuJoc = [["","",""],["","",""],["","",""]];
     let fitxes = 0;
     const complet = 9;
+    let pantalla;
+
+    window.onload = function arraglao(){
+        document.getElementById("lineaGanadora").style.display = "none";
+        pantalla = window.innerWidth;
+    }
 
 
     function iniciar()
@@ -127,11 +144,12 @@
         fitxes = 0;
         tornX = "X";
 
+        document.getElementById("lineaGanadora").style.display = "none";
+
         for(let i = 0; i < matriuJoc.length; i++)
         {
             for(let j = 0; j < matriuJoc.length; j++)
             {
-                console.log();
                 document.getElementById(i.toString() + j.toString()).innerText = "";
             }
         }
@@ -162,7 +180,9 @@
 
     function linea()
     {
-        let linea = false;
+
+        /*Horizontales*/
+        let linea = -1;
         let auxFila = [];
         for(let i = 0; i< matriuJoc.length; i++)
         {
@@ -179,12 +199,12 @@
             if(aux.length == 1 && aux[0] != "")
             {
                 fi = true;
-                return true;
+                return i+10; /*retorn i+1 ja que i va del 0 al 2*/
             }
 
         }
 
-
+        /*Verticales*/ 
         for(let i = 0; i< matriuJoc.length; i++)
         {
             let auxCol = matriuJoc[i];
@@ -200,14 +220,20 @@
             if(aux.length == 1 && aux[0] != "")
             {
                 fi = true;
-                return true;
+                return i+20;
             }
         }
 
-        if((matriuJoc[0][0] == matriuJoc[2][2] && matriuJoc[1][1] == matriuJoc[0][0] && matriuJoc[2][2]) || (matriuJoc[0][2] == matriuJoc[2][0] && matriuJoc[1][1] == matriuJoc[0][2] && matriuJoc[2][0]))
+        /*Diagonals*/ /*N-O*/
+        if((matriuJoc[0][0] == matriuJoc[2][2] && matriuJoc[1][1] == matriuJoc[0][0] && matriuJoc[2][2]))
         {
             fi = true;
-            return true; 
+            return 1; 
+        }
+        else if((matriuJoc[0][2] == matriuJoc[2][0] && matriuJoc[1][1] == matriuJoc[0][2] && matriuJoc[2][0])) /*N-E*/
+        {
+            fi = true;
+            return 2
         }
         
 
@@ -242,10 +268,57 @@
                     ev.target.innerHTML = "O";
                     matriuJoc[cordFil][cordCol] = tornX;
                 }
-                if(!linea())
+                if(linea() == -1)
                     canviTorn();
                 else
                 {
+                    
+                    let ralla = document.getElementById("lineaGanadora");
+                    ralla.style.display = "inherit";
+                    switch (linea()) {
+                        case 1: /*N-O*/
+                            ralla.style.rotate = "-45deg";
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5).toString() + "rem";
+                           
+                            break;
+
+                        case 2: /*N-E*/
+                            ralla.style.rotate = "45deg";
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
+                            break;
+                    
+                        case 10: /*Horizontal 0*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "-8rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";;
+                            break;
+
+                        case 11: /*Horizontal 1*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "0rem 5rem auto "+ ((pantalla/32)-0.5 ).toString() + "rem";
+                            break;
+
+                        case 12: /*Horizontal 2*/
+                            ralla.style.rotate = "90deg";
+                            ralla.style.margin = "8rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
+                            break;
+
+                        case 20: /*Vertical 0*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 -8).toString() + "rem";
+                            break;
+                        
+                        case 21: /*Vertical 1*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 ).toString() + "rem";
+                            break;
+
+                        case 22: /*Vertical 2*/
+                            ralla.style.rotate = "0deg";
+                            ralla.style.margin = "0rem 5rem auto " + ((pantalla/32)-0.5 +8).toString() + "rem";
+                            break;
+                        default:
+                            break;
+                    }
                     document.getElementById("guanyador").innerText = "Han guanyat les: " + tornX; 
                     /*enseñar el botto*/
                     document.getElementById("volver").style.display = "inherit";
@@ -259,13 +332,15 @@
     </script>
 </head>
 <body>
+ 
 
     <table id="juego">
 
         <div id="titol">
             <p id="guanyador">Torn de les: X</p>
         </div>
-        
+
+        <div id="lineaGanadora"></div>
 
         <tr>
             <td class="pieza" id="00"></td>
